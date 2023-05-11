@@ -11,6 +11,8 @@ namespace Restaurant.Controllers
 {
     public class HomeController : Controller
     {
+
+
         private RestaurantContext db = new RestaurantContext();
 
 
