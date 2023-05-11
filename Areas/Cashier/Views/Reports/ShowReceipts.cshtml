@@ -1,0 +1,127 @@
+﻿@model IEnumerable<DataLayer.Models.Receipt>
+
+@{
+    int sum1 = 0;
+    int sum2 = 0;
+}
+
+
+<table class="table" id="main">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ReceiptDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirunBar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Confirm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th>
+            Updated Price
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceiptDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirunBar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Confirm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+            <td>
+                @{
+                    int sum = 0;
+                    foreach (var sub in item.MiniOrders.ToList())
+                    {
+                        sum += sub.quantity * sub.Food.Price;
+                    }
+                    sum1 += item.TotalPrice;
+                    sum2 += sum;
+                }
+                @sum
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ReceiptID }, new { @class = "btn btn-info" })
+            </td>
+        </tr>
+    }
+
+    <tr>
+        <td>
+            <h4>total</h4>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <h4>@sum1</h4>
+        </td>
+        <td>
+            <h4>@sum2</h4>
+        </td>
+        <td></td>
+    </tr>
+
+</table>
+<button id="convertToPdf">Convert to PDF</button>
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            $("#convertToPdf").click(function() {
+                var tableHtml = $("#main").html();
+                //console.log(tableHtml);
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("HtmlToPDF")',
+                    data: { htmlString: `<h1>hello</h1>` },
+                    success: function (data) {
+                        console.log(data);
+                        // The server returns the PDF file as a byte array
+                        // Convert the byte array to a blob and create a URL for it
+                        var blob = new Blob([data], { type: "application/pdf" });
+                        var url = window.URL.createObjectURL(blob);
+
+                        // Create a temporary link element and simulate a click to download the PDF file
+                        var link = document.createElement("a");
+                        link.href = url;
+                        link.download = "report.pdf";
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    },
+                    error: function (x, h, r) {
+                        console.log("b");
+
+                    }
+                });
+            });
+        });
+    </script>
+
+}
