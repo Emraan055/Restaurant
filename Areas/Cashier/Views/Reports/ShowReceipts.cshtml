@@ -89,39 +89,8 @@
     </tr>
 
 </table>
-<button id="convertToPdf">Convert to PDF</button>
-@section scripts{
-    <script>
-        $(document).ready(function() {
-            $("#convertToPdf").click(function() {
-                var tableHtml = $("#main").html();
-                //console.log(tableHtml);
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("HtmlToPDF")',
-                    data: { htmlString: `<h1>hello</h1>` },
-                    success: function (data) {
-                        console.log(data);
-                        // The server returns the PDF file as a byte array
-                        // Convert the byte array to a blob and create a URL for it
-                        var blob = new Blob([data], { type: "application/pdf" });
-                        var url = window.URL.createObjectURL(blob);
+<a href="@Url.Action("GetPdfReceipts")" class="btn btn-warning">Convert to PDF</a>
 
-                        // Create a temporary link element and simulate a click to download the PDF file
-                        var link = document.createElement("a");
-                        link.href = url;
-                        link.download = "report.pdf";
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    },
-                    error: function (x, h, r) {
-                        console.log("b");
 
-                    }
-                });
-            });
-        });
-    </script>
-
-}
+<br />
+<a href="@Url.Action("Index")">Main Menu</a>

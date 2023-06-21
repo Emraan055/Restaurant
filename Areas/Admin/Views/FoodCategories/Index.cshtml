@@ -30,7 +30,6 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.FoodCategoryID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.FoodCategoryID }) |
-                @Html.ActionLink("Details", "FoodsListByCategory","Foods", new { id = item.FoodCategoryID })
             </td>
             <td>
                 @Html.Action("FoodsListByCategory", "Foods", new { id = item.FoodCategoryID })
@@ -38,4 +37,9 @@
         </tr>
     }
 
+
+
 </table>
+
+<br />
+<a href="@Url.Action("Panel","Admin")">Main Menu</a>

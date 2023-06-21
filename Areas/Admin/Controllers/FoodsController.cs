@@ -111,7 +111,7 @@ namespace Restaurant.Areas.Admin.Controllers
                     food.Image = Guid.NewGuid() + Path.GetExtension(imgUp.FileName);
                     imgUp.SaveAs(Server.MapPath("/FoodImages/" + food.Image));
                 }
-                var prevFood = db.Foods.Find(food.FoodID);
+                var prevFood = db.Foods.AsNoTracking().FirstOrDefault(f => f.FoodID == food.FoodID);
                 if (prevFood.Price != food.Price)
                 {
                     var price = new Price();
@@ -120,6 +120,7 @@ namespace Restaurant.Areas.Admin.Controllers
                     price.FoodID = food.FoodID;
                     db.Prices.Add(price);
                 }
+                
                 db.Entry(food).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", "FoodCategories");

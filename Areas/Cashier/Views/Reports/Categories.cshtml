@@ -62,23 +62,7 @@
     </tr>
 
 </table>
-<button id="convertToPdf">Convert to PDF</button>
-@section scripts{
-    <script>
-        $(document).ready(function() {
-            $("#convertToPdf").click(function() {
-                var tableHtml = $("#main").html();
+<a href="@Url.Action("GetPdfCategories")" class="btn btn-warning">Convert to PDF</a>
 
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("HtmlToPDF")",
-                    data: { htmlString: tableHtml },
-                    success: function (result) {
-
-                    }
-                });
-            });
-        });
-    </script>
-
-}
+<br />
+<a href="@Url.Action("Index")">Main Menu</a>

@@ -58,23 +58,9 @@
     </tr>
 
 </table>
-<button id="convertToPdf">Convert to PDF</button>
-@section scripts{
-    <script>
-        $(document).ready(function() {
-            $("#convertToPdf").click(function() {
-                var tableHtml = $("#main").html();
 
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("HtmlToPDF")",
-                    data: { htmlString: tableHtml },
-                    success: function (result) {
+<a href="@Url.Action("GetPdfFoods")" class="btn btn-warning">Convert to PDF</a>
 
-                    }
-                });
-            });
-        });
-    </script>
 
-}
+<br />
+<a href="@Url.Action("Index")">Main Menu</a>
