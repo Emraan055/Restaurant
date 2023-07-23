@@ -1,6 +1,3 @@
-[submodule "RestaurantDataLayer"]
-	path = RestaurantDataLayer
-	url = https://github.com/Emraan055/RestaurantDataLayer
 [submodule "DataLayer"]
 	path = DataLayer
 	url = https://github.com/Emraan055/DataLayer
